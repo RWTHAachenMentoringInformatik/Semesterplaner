@@ -1,0 +1,80 @@
+##Informatik;
+
+#afi(1, 0, 1, 6, 120);
+-> lineare algebra, numerisches rechnen;
+=> numerisches rechnen;
+
+#diskrete strukturen(1, 0, 1, 6, 120);
+-> lineare algebra, datenstrukturen und algorithmen, berechenbarkeit und komplexität, numerisches rechnen;
+=> berechenbarkeit und komplexität;
+
+#programmierung(1, 0, 1, 6, 120);
+-> softwaretechnik, betriebssysteme und systemsoftware, datenstrukturen und algorithmen, praktikum systemprogrammierung;
+=> praktikum systemprogrammierung;
+
+
+#einführung in die technische informatik(1, 0, 1, 6, 120);
+-> softwaretechnik, betriebssysteme und systemsoftware, datenstrukturen und algorithmen, praktikum systemprogrammierung;
+=> praktikum systemprogrammierung;
+~> praktikum systemprogrammierung;
+    
+%2. Semester:
+#formale systeme automaten und prozesse(2, 1, 0, 6, 120);
+-> berechenbarkeit und komplexität;
+=> berechenbarkeit und komplexität;
+
+#betriebssysteme und systemsoftware(2, 1, 0, 6, 120);
+-> datenkommunikation und sicherheit;
+=> datenkommunikation und sicherheit;
+
+#datenstrukturen und algorithmen(2, 1, 0, 6, 120);
+-> datenbanken und informationssysteme, softwarepraktikum;
+=> softwarepraktikum;
+
+#einführung in die angewandte stochastik(2, 1, 0, 6, 120);
+
+#lineare algebra(2, 1, 0, 6, 120);
+-> numerisches rechnen, matemathische logik;
+=> numerisches rechnen;
+
+%3. Semester:
+#numerisches rechnen(3, 0, 1, 6, 120);
+
+#berechenbarkeit und komplexität(3, 0, 1, 6, 120);
+-> mathematische logik;
+=> mathematische logik;
+
+#softwaretechnik(3, 0, 1, 6, 120);
+
+#praktikum systemprogrammierung(3, 1, 1, 6, 120);
+-> softwarepraktikum;
+
+#proseminar(3, 0, 1, 4, 100);
+-> seminar;
+~> seminar;
+
+%4. Semester:
+#datenbanken und informationssysteme(4, 1, 0, 6, 120);
+
+#mathematische logik(4, 1, 0, 6, 120);
+
+#datenkommunikation und sicherheit(4, 1, 0, 6, 120);
+
+#softwarepraktikum(4, 1, 0, 6, 120);
+
+%5. Semester:
+#wahlpflicht 1(5, 1, 1, 6, 120);
+
+#wahlpflicht 2(5, 1, 1, 6, 120);
+
+#wahlpflicht theorie(5, 1, 1, 6, 120);
+
+#seminar(5, 1, 1, 3, 120);
+~> bachelorarbeit;
+
+#NTW(5, 1, 1, 4, 80);
+
+%6. Semester:
+#wahlpflicht 3(6, 1, 1, 6, 120);
+
+#bachelorarbeit(6, 1, 1, 16, 350);

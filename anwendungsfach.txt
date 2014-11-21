@@ -1,0 +1,29 @@
+##BWL;
+
+##Mathematik;
+
+##Elektrotechnick;
+
+##Physik;
+
+##Biologie;
+
+#Biologie für Informatiker und Mathematiker 1(3,0,1,6,120);
+~> Biologie für Informatiker und Mathematiker 2;
+
+#Biologie für Informatiker und Mathematiker 2(4,1,0,6,120);
+
+#Praktikum Tierphysiologie(6,1,0,5,120);
+
+#Praktikum Pflanzenphysiologie(4,1,0,3,60);
+
+#Praktikum Mikrobiologie(3,0,1,2,40);
+
+##Chemie
+
+##Maschinenbau
+
+##Medizin
+
+##Philosophie
+
