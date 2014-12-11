@@ -44,7 +44,6 @@ public class Controller {
     private Controller(String[] args, String datapath/*, MyView v*/){
         this.dfp = new DataFileParser(datapath);
         this.studium = dfp.parseStudium(datapath);
-        System.out.println("Setting Studium!");
     }
 
     public void outputStudium(){

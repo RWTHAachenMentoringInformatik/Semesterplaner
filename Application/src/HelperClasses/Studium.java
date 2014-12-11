@@ -19,6 +19,14 @@ public class Studium {
         this.hMax = hMax;
     }
 
+    public int getcPMax() {
+        return cPMax;
+    }
+
+    public int gethMax() {
+        return hMax;
+    }
+
     String name = "";
 
     int cPMax = 35;
@@ -36,8 +44,8 @@ public class Studium {
     * Bsp: Afi-> Semester 1, Alphabet 0 -> Afi.ID = 0
     * Bsp2: Malo -> Semester 4, Alphabet 3 -> Malo.ID = 6
     */
-
     public Studium() {
+        //Do Not Use!
     }
 
     public void setName(String name) {
@@ -277,7 +285,6 @@ public class Studium {
         return whitenew;
     }
 
-
     //DO NOT TOUCH
     public void pushToNextFreeSlot(Modul mod, int currentUserSemester) {
 
@@ -329,7 +336,7 @@ public class Studium {
 
         boolean nothingPushed = true;
 
-        System.out.print(white+ mod.getName()+": " + oldSemester.getNumber() + " to " + tmpSem.getNumber() +" {\n");
+        //System.out.print(white+ mod.getName()+": " + oldSemester.getNumber() + " to " + tmpSem.getNumber() +" {\n");
 
         for (int i = 0; i < mod.getVoraussetzungen().size(); i++) {
             zuversch = mod.getVoraussetzungen().get(i);
@@ -337,7 +344,7 @@ public class Studium {
                 continue;
             }
             else if (allModulesTillThen.contains(this.findModulbyName(zuversch.getName()))) {
-                System.out.print(white+"  "+mod.getName()+" ~> "+zuversch.getName()+"\n");
+                //System.out.print(white+"  "+mod.getName()+" ~> "+zuversch.getName()+"\n");
                 pushToNextFreeSlot(zuversch, currentUserSemester);
                 nothingPushed = false;
             }
@@ -351,7 +358,7 @@ public class Studium {
                     continue;
                 }
                 else if (nothingPushed && modules.contains(this.findModulbyName(zuversch.getName()))) {
-                    System.out.print(white+"  "+mod.getName()+" :=> "+zuversch.getName()+"\n");
+                    //System.out.print(white+"  "+mod.getName()+" :=> "+zuversch.getName()+"\n");
                     pushToNextFreeSlot(zuversch, currentUserSemester);
                     nothingPushed = false;
                 }
@@ -363,7 +370,7 @@ public class Studium {
                     continue;
                 }
                 else if (nothingPushed && modules.contains(zuversch)) {
-                    System.out.print(white+"  "+mod.getName()+" ::-> "+zuversch.getName()+"\n");
+                    //System.out.print(white+"  "+mod.getName()+" ::-> "+zuversch.getName()+"\n");
                     pushToNextFreeSlot(zuversch, currentUserSemester);
                     nothingPushed = false;
                 }
@@ -376,13 +383,13 @@ public class Studium {
                 continue;
             }
             else if (zuversch != null && allModulesTillThen.contains(this.findModulbyName(zuversch.getName()))) {
-                System.out.print(white+"  "+mod.getName()+" n-> "+zuversch.getName()+"\n");
+                //System.out.print(white+"  "+mod.getName()+" n-> "+zuversch.getName()+"\n");
                 zuversch.notifyRecomm(mod.getName());
             }
         }
 
 
-        System.out.println(white+"}");
+        //System.out.println(white+"}");
         white = recDownWhite();
 
     }
@@ -391,7 +398,7 @@ public class Studium {
         Semester tmpS;
         Modul tmpM;
 
-        System.out.println("\n##REORGANIZE##\n{");
+        //System.out.println("\n##REORGANIZE##\n{");
         for (int i = 0; i < old.getSemester().size(); i++) {
             tmpS = old.getSemester().get(i);
             for (int j = 0; j < tmpS.getModules().size(); j++) {
@@ -403,7 +410,14 @@ public class Studium {
                 }
             }
         }
-        System.out.println("}\n##DONE##\n");
+        //System.out.println("}\n##DONE##\n");
+
+        for(int i = 0; i < getSemester().size(); i++){
+            Semester tmp = getSemester().get(i);
+            for(int j = 0; j < tmp.getModules().size(); j++){
+                tmp.getModules().get(j).setAbsolved(true);
+            }
+        }
     }
 
     private void deleteByName(String s) {
