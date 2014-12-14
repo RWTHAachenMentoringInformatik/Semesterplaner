@@ -2,6 +2,7 @@ package HelperClasses;
 
 import Parser.DataFileParser;
 import Parser.DataParser;
+import com.sun.xml.internal.ws.api.server.Module;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -470,5 +471,77 @@ public class Studium {
         return out;
     }
 
+    public void shiftLeft(String text, int currentUserSemester) {
 
+        Modul mod = findModulbyName(text);
+
+        short oldSemNumber = mod.getSemesterNumber();
+
+        Semester oldSemester = this.getSemester().get(oldSemNumber - 1);
+
+        short nextSemesterNumber = (short) (oldSemNumber - 2);
+
+        if (mod.getSommerWinter() == SommerWinterSemester.BEIDE) {
+            nextSemesterNumber++;
+        }
+
+        if((currentUserSemester%2==1&&mod.getSommerWinter().equals(SommerWinterSemester.SOMMER))
+                ||(currentUserSemester%2==0&&mod.getSommerWinter().equals(SommerWinterSemester.WINTER))){
+            nextSemesterNumber = (short)Math.max(nextSemesterNumber,currentUserSemester+1);
+        }else{
+            nextSemesterNumber = (short)Math.max(nextSemesterNumber,currentUserSemester);
+        }
+
+        mod.setSemesterNumber(nextSemesterNumber);
+
+        this.deleteByName(mod.getName());
+        oldSemester.setCp(oldSemester.getCp() - mod.getCredits());
+
+        Semester tmpSem = this.semester.get(nextSemesterNumber - 1);
+
+        ArrayList<Modul> modules = tmpSem.getModules();
+
+        modules.add(mod);
+        tmpSem.setCp(tmpSem.getCp() + mod.getCredits());
+    }
+
+    public void shiftRight(String text, int currentUserSemester) {
+
+        Modul mod = findModulbyName(text);
+
+        short oldSemNumber = mod.getSemesterNumber();
+
+        Semester oldSemester = this.getSemester().get(oldSemNumber - 1);
+
+        short size = (short) this.getSemester().size();
+
+        short nextSemesterNumber = (short) (oldSemNumber + 2);
+
+        if (mod.getSommerWinter() == SommerWinterSemester.BEIDE) {
+            nextSemesterNumber--;
+        }
+
+        if((currentUserSemester%2==1&&mod.getSommerWinter().equals(SommerWinterSemester.SOMMER))
+                ||(currentUserSemester%2==0&&mod.getSommerWinter().equals(SommerWinterSemester.WINTER))){
+            nextSemesterNumber = (short)Math.max(nextSemesterNumber,currentUserSemester+1);
+        }else{
+            nextSemesterNumber = (short)Math.max(nextSemesterNumber,currentUserSemester);
+        }
+
+        mod.setSemesterNumber(nextSemesterNumber);
+
+        for (int i = nextSemesterNumber - size; i > 0; i--) {
+            this.semester.add(new Semester(nextSemesterNumber - (i - 1)));
+        }
+
+        this.deleteByName(mod.getName());
+        oldSemester.setCp(oldSemester.getCp() - mod.getCredits());
+
+        Semester tmpSem = this.semester.get(nextSemesterNumber - 1);
+
+        ArrayList<Modul> modules = tmpSem.getModules();
+
+        modules.add(mod);
+        tmpSem.setCp(tmpSem.getCp() + mod.getCredits());
+    }
 }

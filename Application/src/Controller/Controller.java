@@ -15,6 +15,8 @@ public class Controller {
 
     DataParser dfp;
 
+    private static String datapath = "";
+
     public DataParser getParser(){
         return dfp;
     }
@@ -41,7 +43,8 @@ public class Controller {
 
     boolean[] absolvedModules;
 
-    private Controller(String[] args, String datapath/*, MyView v*/){
+    private Controller(String datapath/*, MyView v*/){
+        this.datapath = datapath;
         this.dfp = new DataFileParser(datapath);
         this.studium = dfp.parseStudium(datapath);
     }
@@ -50,11 +53,22 @@ public class Controller {
         System.out.println(this.studium.toString());
     }
 
-    public static Controller getController(String[] args, String datapath){
+    public static Controller getController(String datapath){
         if(instance==null){
-            instance = new Controller(args, datapath);
+            instance = new Controller(datapath);
         }
         return instance;
+    }
+
+    public static Controller getController(){
+        if(instance==null){
+            instance = new Controller(datapath);
+        }
+        return instance;
+    }
+
+    public static void resetController(){
+        instance = new Controller(datapath);
     }
 
     public void reorganizeModules(){
@@ -120,5 +134,13 @@ public class Controller {
 
     public void outputStudiumFrom(int currentSemester) {
         System.out.println(this.studium.toStringFromSemester(Math.max(currentSemester,1)));
+    }
+
+    public void shiftLeft(String text, int sem) {
+        studium.shiftLeft(text, sem);
+    }
+
+    public void shiftRight(String text , int sem) {
+        studium.shiftRight(text, sem);
     }
 }
