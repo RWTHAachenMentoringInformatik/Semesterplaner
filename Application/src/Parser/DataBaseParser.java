@@ -1,6 +1,6 @@
 package Parser;
 
-import HelperClasses.Studium;
+import Studium.Studium;
 
 /**
  * Created by philippe on 14.11.14.

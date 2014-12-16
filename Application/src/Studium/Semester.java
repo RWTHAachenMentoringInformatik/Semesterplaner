@@ -1,4 +1,4 @@
-package HelperClasses;
+package Studium;
 
 import java.util.ArrayList;
 
@@ -7,14 +7,40 @@ import java.util.ArrayList;
  */
 public class Semester implements Comparable {
 
+    ArrayList<Modul> modules = new ArrayList<Modul>();
     private int cp;
-
     private int maxCp = 99;
-
     private int houresMax = 9999;
+    private int houres;
+    private int number = -1;
+
+    public Semester() {
+        this(-1);
+    }
+
+    public Semester(int i) {
+        this.number = i;
+        this.cp = 0;
+    }
+
+    public Semester(int i, int cp) {
+        this.number = i;
+        this.cp = cp;
+    }
+
+    public Semester(int i, int cp, int h) {
+        this.number = i;
+        this.cp = cp;
+        this.houres = h;
+    }
+
 
     public int getMaxCp() {
         return maxCp;
+    }
+
+    public void setMaxCp(int maxCp) {
+        this.maxCp = maxCp;
     }
 
     public int getHouresMax() {
@@ -24,12 +50,6 @@ public class Semester implements Comparable {
     public void setHouresMax(int houresMax) {
         this.houresMax = houresMax;
     }
-
-    public void setMaxCp(int maxCp) {
-        this.maxCp = maxCp;
-    }
-
-    private int houres;
 
     public int getHoures() {
         return houres;
@@ -46,24 +66,6 @@ public class Semester implements Comparable {
     public void setCp(int cp) {
         this.cp = cp;
     }
-
-    public Semester() {
-        this(-1);
-    }
-
-    public Semester(int i) {
-        this.number = i;
-        this.cp = 0;
-    }
-
-    public Semester(int i, int cp) {
-        this.number = i;
-        this.cp = cp;
-    }
-
-    private int number = -1;
-
-    ArrayList<Modul> modules = new ArrayList<Modul>();
 
     public void add(Modul m) {
         modules.add(m);
@@ -89,11 +91,11 @@ public class Semester implements Comparable {
         return modules;
     }
 
-    public boolean isEmpty() {
-        return modules.size() == 0;
-    }
-
     public void setModules(ArrayList<Modul> modules) {
         this.modules = modules;
+    }
+
+    public boolean isEmpty() {
+        return modules.size() == 0;
     }
 }

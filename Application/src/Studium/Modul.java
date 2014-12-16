@@ -1,4 +1,4 @@
-package HelperClasses; /**
+package Studium; /**
  * Created by philippe on 03.11.14.
  */
 
@@ -8,6 +8,17 @@ import java.util.ArrayList;
 public class Modul implements Comparable {
 
     public static int COUNT = 0;
+    private int ID;
+    private String name;
+    private boolean absolved = false;
+    private short semesterNumber;
+    private ArrayList<Modul> voraussetzungen = new ArrayList<Modul>();
+    private ArrayList<Modul> empfehlungen = new ArrayList<Modul>();
+    private ArrayList<Modul> verschiebungen = new ArrayList<Modul>();
+    private ArrayList<String> anmerkungen = new ArrayList<String>();
+    private int stunden_die_woche_h;
+    private short credits;
+    private SommerWinterSemester sommerWinter;
 
     public Modul() {
         this("", (short) 0, null, null, null, null, 0, (short) 0, SommerWinterSemester.BEIDE);
@@ -42,12 +53,6 @@ public class Modul implements Comparable {
         this.credits = credits;
         this.sommerWinter = sommer_winter;
     }
-
-    private int ID;
-
-    private String name;
-
-    private boolean absolved = false;
 
     public boolean isAbsolved() {
         return absolved;
@@ -89,24 +94,12 @@ public class Modul implements Comparable {
         }
     }
 
-    private short semesterNumber;
-
-    private ArrayList<Modul> voraussetzungen = new ArrayList<Modul>();
-
-    private ArrayList<Modul> empfehlungen = new ArrayList<Modul>();
-
-    private ArrayList<Modul> verschiebungen = new ArrayList<Modul>();
-
-    private ArrayList<String> anmerkungen = new ArrayList<String>();
-
-    private int stunden_die_woche_h;
-
-    private short credits;
-
-    private SommerWinterSemester sommerWinter;
-
     public int getID() {
         return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -115,6 +108,10 @@ public class Modul implements Comparable {
 
     public short getSemesterNumber() {
         return semesterNumber;
+    }
+
+    public void setSemesterNumber(short semesterNumber) {
+        this.semesterNumber = semesterNumber;
     }
 
     public ArrayList<String> getAnmerkungen() {
@@ -131,14 +128,6 @@ public class Modul implements Comparable {
 
     public SommerWinterSemester getSommerWinter() {
         return sommerWinter;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public void setSemesterNumber(short semesterNumber) {
-        this.semesterNumber = semesterNumber;
     }
 
     public Modul copy() {
@@ -164,7 +153,7 @@ public class Modul implements Comparable {
     }
 
     public void notifyRecomm(String name) {
-        this.anmerkungen.add("Achtung: du hast " + name + " nicht absolved, das könnte schwer werden!!");
+        this.anmerkungen.add("Warning: You have not passed " + name + ", this could get hard!");
     }
 
 }

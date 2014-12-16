@@ -1,9 +1,9 @@
 package Parser;
 
 
-import HelperClasses.Modul;
-import HelperClasses.SommerWinterSemester;
-import HelperClasses.Studium;
+import Studium.Modul;
+import Studium.SommerWinterSemester;
+import Studium.Studium;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,24 +14,39 @@ import java.util.ArrayList;
  */
 public class DataFileParser implements DataParser {
 
-     FileReader fr;
-     BufferedReader br;
+    FileReader fr;
+    BufferedReader br;
 
-    private  String readFileLine(){
+    public DataFileParser() {
+        this("file.txt");
+    }
+
+    public DataFileParser(String pathToFile) {
+        try {
+            fr = new FileReader(pathToFile);
+            br = new BufferedReader(fr);
+        } catch (Exception e) {
+            System.out.print("Failed to open studium-data-file!\n");
+            e.printStackTrace();
+        }
+    }
+
+    private String readFileLine() {
         String s = null;
-        try{
+        try {
             s = br.readLine();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.print("Could not read Line!");
         }
         return s;
     }
-    private  Modul parseNextModule(){
+
+    private Modul parseNextModule() {
         String line;
-        do{
+        do {
             line = readFileLine();
-            if(line == null) return null;
-        }while(!isModuleName(line));
+            if (line == null) return null;
+        } while (!isModuleName(line));
         String name = "";
         boolean wintersem = false;
         boolean sose = false;
@@ -52,46 +67,46 @@ public class DataFileParser implements DataParser {
                 this.sommerWinter
          */
         int i = 0;
-        while(isSpecialSign(tmp[i])) i++;
-        while(!isSpecialSignWithoutSpace(tmp[i])){
+        while (isSpecialSign(tmp[i])) i++;
+        while (!isSpecialSignWithoutSpace(tmp[i])) {
             name += tmp[i];
             i++;
         }
 
-        while(isSpecialSign(tmp[i])) i++;
-        while(!isSpecialSign(tmp[i])){
+        while (isSpecialSign(tmp[i])) i++;
+        while (!isSpecialSign(tmp[i])) {
             tmps += tmp[i];
             i++;
         }
         semester = Short.parseShort(tmps);
         tmps = "";
 
-        while(isSpecialSign(tmp[i])) i++;
-        while(!isSpecialSign(tmp[i])){
+        while (isSpecialSign(tmp[i])) i++;
+        while (!isSpecialSign(tmp[i])) {
             tmps += tmp[i];
             i++;
         }
-        if(tmps.equals("1")) wintersem = true;
+        if (tmps.equals("1")) wintersem = true;
         tmps = "";
 
-        while(isSpecialSign(tmp[i])) i++;
-        while(!isSpecialSign(tmp[i])){
+        while (isSpecialSign(tmp[i])) i++;
+        while (!isSpecialSign(tmp[i])) {
             tmps += tmp[i];
             i++;
         }
-        if(tmps.equals("1")) sose = true;
+        if (tmps.equals("1")) sose = true;
         tmps = "";
 
-        while(isSpecialSign(tmp[i])) i++;
-        while(!isSpecialSign(tmp[i])){
+        while (isSpecialSign(tmp[i])) i++;
+        while (!isSpecialSign(tmp[i])) {
             tmps += tmp[i];
             i++;
         }
         cp = Short.parseShort(tmps);
         tmps = "";
 
-        while(isSpecialSign(tmp[i])) i++;
-        while(!isSpecialSign(tmp[i])){
+        while (isSpecialSign(tmp[i])) i++;
+        while (!isSpecialSign(tmp[i])) {
             tmps += tmp[i];
             i++;
         }
@@ -99,149 +114,150 @@ public class DataFileParser implements DataParser {
         tmps = "";
 
         SommerWinterSemester sw = SommerWinterSemester.WINTER;
-        if(sose&&wintersem) sw = SommerWinterSemester.BEIDE;
-        else if(wintersem) sw = SommerWinterSemester.SOMMER;
+        if (sose && wintersem) sw = SommerWinterSemester.BEIDE;
+        else if (wintersem) sw = SommerWinterSemester.SOMMER;
         else sw = SommerWinterSemester.WINTER;
-        return new Modul(name, semester,null,null,null,null,houres,cp,sw);
+        return new Modul(name, semester, null, null, null, null, houres, cp, sw);
     }
-    private  ArrayList<Modul> parseModules(){
+
+    private ArrayList<Modul> parseModules() {
         ArrayList<Modul> ret = new ArrayList<Modul>();
         Modul mtmp = null;
-        do{
+        do {
             mtmp = parseNextModule();
-            if(mtmp!=null)ret.add(mtmp.copy());
-        }while(mtmp != null);
+            if (mtmp != null) ret.add(mtmp.copy());
+        } while (mtmp != null);
         return ret;
     }
-    private  String parseStudiumName() {
+
+    private String parseStudiumName() {
         String name = readFileLine();
-        while(name!=null&&!isName(name)){
+        while (name != null && !isName(name)) {
             name = readFileLine();
         }
         String ret = "";
-        if(name!=null){
+        if (name != null) {
             char[] namec = name.toCharArray();
             int i = 0;
-            while(isSpecialSign(namec[i])) i++;
-            while(!isEndSign(namec[i])){
+            while (isSpecialSign(namec[i])) i++;
+            while (!isEndSign(namec[i])) {
                 ret += namec[i];
                 i++;
             }
         }
         return ret;
     }
-    public DataFileParser(){
-        this("file.txt");
-    }
-    public DataFileParser(String pathToFile){
-        try {
-            fr = new FileReader(pathToFile);
-            br = new BufferedReader(fr);
-        } catch (Exception e) {
-            System.out.print("Failed to open studium-data-file!\n");
-            e.printStackTrace();
-        }
-    }
 
     @Override
-    public Studium parseStudium(String pathToFile){
-            Studium s = new Studium(parseStudiumName(), parseModules(), pathToFile);
-            try {
-                br.close();
-                fr.close();
-            } catch (Exception e) {
-                System.out.print("Failed to close studium-data-file!\n");
+    public Studium parseStudium(String pathToFile) {
+        Studium s = new Studium(parseStudiumName(), parseModules(), pathToFile);
+        try {
+            br.close();
+            fr.close();
+        } catch (Exception e) {
+            System.out.print("Failed to close studium-data-file!\n");
 
-                e.printStackTrace();
-            }
-            createDependencies(s, pathToFile);
-            return s;
+            e.printStackTrace();
+        }
+        createDependencies(s, pathToFile);
+        return s;
 
     }
 
     //#################### ONLY HELPER DOWN HERE ####################
 
-    private  boolean isSpecialSign(char c) {
-        return c=='#'||c==','||c==' '||c=='%'||c=='-'||c=='='||c=='~'||c=='>'||c=='('||c==')';
+    private boolean isSpecialSign(char c) {
+        return c == '#' || c == ',' || c == ' ' || c == '%' || c == '-' || c == '=' || c == '~' || c == '>' || c == '(' || c == ')';
     }
-    private  boolean isSpecialSignWithoutSpace(char c) {
-        return c=='#'||c==','||c=='%'||c=='-'||c=='='||c=='~'||c=='>'||c=='('||c==')';
+
+    private boolean isSpecialSignWithoutSpace(char c) {
+        return c == '#' || c == ',' || c == '%' || c == '-' || c == '=' || c == '~' || c == '>' || c == '(' || c == ')';
     }
-    private  boolean isEndSign(char c) {
-        return c=='\n'||c==';';
+
+    private boolean isEndSign(char c) {
+        return c == '\n' || c == ';';
     }
-    private  boolean isCommentOrEmtpy(String s) {
-        if(s!=null && s.length()>1){
-            return s.toCharArray()[0]=='%' || s.toCharArray()[0]==' ';
+
+    private boolean isCommentOrEmtpy(String s) {
+        if (s != null && s.length() > 1) {
+            return s.toCharArray()[0] == '%' || s.toCharArray()[0] == ' ';
         }
         return false;
     }
-    private  boolean isName(String s) {
-        if(s!=null && s.length()>1){
-            return s.toCharArray()[0]=='#' && s.toCharArray()[1]=='#';
+
+    private boolean isName(String s) {
+        if (s != null && s.length() > 1) {
+            return s.toCharArray()[0] == '#' && s.toCharArray()[1] == '#';
         }
         return false;
     }
-    private  boolean isModuleName(String s) {
-        if(s!=null && s.length()>1){
-            return s.toCharArray()[0]=='#' && s.toCharArray()[1]!='#';
+
+    private boolean isModuleName(String s) {
+        if (s != null && s.length() > 1) {
+            return s.toCharArray()[0] == '#' && s.toCharArray()[1] != '#';
         }
         return false;
     }
 
 
-    private  boolean isEmpfehlung(String s) {
-        if(s!=null && s.length()>1){
-            return s.toCharArray()[0]=='-' && s.toCharArray()[1]=='>';
-        }
-        return false;
-    }
-    private  boolean isVerdraengung(String s) {
-        if(s!=null && s.length()>1){
-            return s.toCharArray()[0]=='=' && s.toCharArray()[1]=='>';
-        }
-        return false;
-    }
-    private  boolean isVoraussetzung(String s) {
-        if(s!=null && s.length()>1){
-            return s.toCharArray()[0]=='~' && s.toCharArray()[1]=='>';
+    private boolean isEmpfehlung(String s) {
+        if (s != null && s.length() > 1) {
+            return s.toCharArray()[0] == '-' && s.toCharArray()[1] == '>';
         }
         return false;
     }
 
-    private  void createDependencies(Studium s, String pathToFile){
-        if(s==null) return;
+    private boolean isVerdraengung(String s) {
+        if (s != null && s.length() > 1) {
+            return s.toCharArray()[0] == '=' && s.toCharArray()[1] == '>';
+        }
+        return false;
+    }
+
+    private boolean isVoraussetzung(String s) {
+        if (s != null && s.length() > 1) {
+            return s.toCharArray()[0] == '~' && s.toCharArray()[1] == '>';
+        }
+        return false;
+    }
+
+    private void createDependencies(Studium s, String pathToFile) {
+        if (s == null) return;
         createDependenciesSoft(s, pathToFile);
         createDependenciesMiddle(s, pathToFile);
         createDependenciesHard(s, pathToFile);
     }
 
-    private  void reOpen(String s){
+    private void reOpen(String s) {
         try {
             fr = new FileReader(s);
             br = new BufferedReader(fr);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.print("Failed to open studium-data-file! [2]\n");
             e.printStackTrace();
         }
     }
-    private  void close(){
-        try{
-            br.close(); fr.close();
-        }catch(Exception e){
+
+    private void close() {
+        try {
+            br.close();
+            fr.close();
+        } catch (Exception e) {
             System.out.print("Failed to close studium-data-file!\n");
 
             e.printStackTrace();
         }
     }
-    private  void closeThenReOpen(String s){
+
+    private void closeThenReOpen(String s) {
         reOpen(s);
         close();
     }
 
-    private  void createDependenciesHard(Studium s, String p) {
-         for(int i = 0; i < s.getSemester().size(); i++) {
-             big: for(int j = 0 ; j < s.getSemester().get(i).getModules().size(); j++) {
+    private void createDependenciesHard(Studium s, String p) {
+        for (int i = 0; i < s.getSemester().size(); i++) {
+            big:
+            for (int j = 0; j < s.getSemester().get(i).getModules().size(); j++) {
                 reOpen(p);
                 Modul m = s.getSemester().get(i).getModules().get(j);
                 String name = m.getName();
@@ -263,7 +279,7 @@ public class DataFileParser implements DataParser {
                         name_tmp += tmp[count];
                         count++;
                     }
-                }while(!name.equals(name_tmp));
+                } while (!name.equals(name_tmp));
 
                 count = 0;
                 ArrayList<String> modules = new ArrayList<String>();
@@ -276,22 +292,23 @@ public class DataFileParser implements DataParser {
                 name_tmp = "";
                 do {
                     while (isSpecialSign(tmp[count])) count++;
-                    while (!isSpecialSignWithoutSpace(tmp[count])&&!isEndSign(tmp[count])) {
+                    while (!isSpecialSignWithoutSpace(tmp[count]) && !isEndSign(tmp[count])) {
                         name_tmp += tmp[count];
                         count++;
                     }
                     modules.add(name_tmp);
                     name_tmp = "";
-                }while(!isEndSign(tmp[count]));
+                } while (!isEndSign(tmp[count]));
                 m.setVoraussetzungen(s, modules);
                 close();
             }
         }
     }
 
-    private  void createDependenciesMiddle(Studium s, String p) {
-        for(int i = 0; i < s.getSemester().size(); i++) {
-            big: for(int j = 0 ; j < s.getSemester().get(i).getModules().size(); j++) {
+    private void createDependenciesMiddle(Studium s, String p) {
+        for (int i = 0; i < s.getSemester().size(); i++) {
+            big:
+            for (int j = 0; j < s.getSemester().get(i).getModules().size(); j++) {
                 reOpen(p);
                 Modul m = s.getSemester().get(i).getModules().get(j);
                 String name = m.getName();
@@ -313,7 +330,7 @@ public class DataFileParser implements DataParser {
                         name_tmp += tmp[count];
                         count++;
                     }
-                }while(!name.equals(name_tmp));
+                } while (!name.equals(name_tmp));
                 name_tmp = "";
                 count = 0;
                 ArrayList<String> modules = new ArrayList<String>();
@@ -325,21 +342,22 @@ public class DataFileParser implements DataParser {
                 char[] tmp = line.toCharArray();
                 do {
                     while (isSpecialSign(tmp[count])) count++;
-                    while (!isSpecialSignWithoutSpace(tmp[count])&&!isEndSign(tmp[count])) {
+                    while (!isSpecialSignWithoutSpace(tmp[count]) && !isEndSign(tmp[count])) {
                         name_tmp += tmp[count];
                         count++;
                     }
                     modules.add(name_tmp);
                     name_tmp = "";
-                }while(!isEndSign(tmp[count]));
+                } while (!isEndSign(tmp[count]));
                 m.setVerschiebungen(s, modules);
 
                 close();
             }
         }
     }
-    private  void createDependenciesSoft(Studium s, String p) {
-        for(int i = 0; i < s.getSemester().size(); i++) {
+
+    private void createDependenciesSoft(Studium s, String p) {
+        for (int i = 0; i < s.getSemester().size(); i++) {
             big:
             for (int j = 0; j < s.getSemester().get(i).getModules().size(); j++) {
                 reOpen(p);

@@ -1,4 +1,4 @@
-package HelperClasses;
+package Studium;
 
 /**
  * Created by philippe on 03.11.14.
