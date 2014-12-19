@@ -138,7 +138,7 @@ public class FirstView extends View {
                     ((JButton) tmp).addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent actionEvent) {
-                            Planner.stop();
+                            exit();
                         }
                     });
                     tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
@@ -162,7 +162,7 @@ public class FirstView extends View {
 
     @Override
     public void exit() {
-        Planner.exchangeViews();
+        Planner.stop();
     }
 
 }

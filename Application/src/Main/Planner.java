@@ -5,15 +5,21 @@ package Main; /**
 import Manager.StudiumManager;
 import View.FirstView;
 import View.MyView;
+import View.View;
 
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+
+/**
+ * The Planner runs the main program. It instantiates the Controller and the View, then
+ * coordinates the communication betwenn the two of them!
+ * */
 public class Planner {
 
     final private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static JFrame view = null;
+    private static View view = null;
     private static StudiumManager c = null;
     private static int semester = 1;
     private static int credits = 1;
@@ -32,10 +38,16 @@ public class Planner {
         return null;
     }
 
+    /**
+     * This function refreshes your view.
+     * */
     private static void refreshView() {
-        ((MyView) view).refresh(c.getStudium());
+        view.refresh(c.getStudium());
     }
 
+    /**
+     * Call this method to start the program.
+     * */
     public static void main(String[] args) {
         String datapath = "";
         if (args.length != 0) {
@@ -50,19 +62,28 @@ public class Planner {
         view.setVisible(true);
     }
 
+    /**
+     * Reorganizes the studium with the user-input
+     * */
     public static void doReorganize() {
         c.reorganizeModules();
         refreshView();
     }
 
+    /**Helper-Function for my version of the view*/
     public static int getCpMax() {
         return c.getStudium().getcPMax();
     }
 
+    /**Helper-Function for my version of the view*/
     public static int getHMax() {
         return c.getStudium().gethMax();
     }
 
+    /**
+     * Pushes the selected Modul to the next ("Right") free Semester
+     * (or to the last free Semester "Left")
+     * */
     public static void shiftModule(String dir) {
         if (dir.equals(((MyView) view).RIGHT)) {
             c.shiftRight();
@@ -72,15 +93,22 @@ public class Planner {
         refreshView();
     }
 
+
     public static String getModulToShift() {
         return c.getModuleToShift();
     }
 
+    /**
+     * Sets the Modul that can be shifted afterwards with the Method "shiftModule"
+     * */
     public static void setModulToShift(String text) {
         c.setModuleToShift(text);
         refreshView();
     }
 
+    /**
+     * The Modul that has the same name as "text" will be set Absolved/Not Absolved
+     * */
     public static void updateAbsolved(String text) {
         if (c.getStudium().findModulbyName(text).isAbsolved()) {
             c.getStudium().setNotAbsolved(text);
@@ -91,6 +119,9 @@ public class Planner {
         refreshView();
     }
 
+    /**
+     * Resets everything except for the initial choices of maximal credits, houres, semester, etc.
+     * */
     public static void resetStudium() {
         StudiumManager.resetController();
         c = StudiumManager.getController();
@@ -100,6 +131,9 @@ public class Planner {
         refreshView();
     }
 
+    /**
+     * Your View can (and should) deliver the initial Data with this Method!
+     * */
     public static void addInitialData(int currSem, int maxCp, int maxH) {
         c.getStudium().setCurrentSemester(currSem);
         credits = maxCp;
@@ -111,6 +145,9 @@ public class Planner {
         view.setVisible(true);
     }
 
+    /**
+     * Helper Function if you want to visualize Tipps the mentoringTeam gives you!
+     * */
     public static String requestPopup(String module) {
         String ret = "";
         String s;
@@ -125,10 +162,16 @@ public class Planner {
         return ret;
     }
 
+    /**
+     * Kills your current View!
+     * */
     public static void stop() {
         view.dispose();
     }
 
+    /**
+     * Kills the current view and Exchanges it with the initial View!
+     * */
     public static void exchangeViews() {
         view.dispose();
         view = new FirstView();
