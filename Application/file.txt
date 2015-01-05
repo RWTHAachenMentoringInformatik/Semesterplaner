@@ -1,6 +1,6 @@
 ##Informatik;
 
-#Afi(1, 0, 1, 6, 120);
+#Afi(1, 0, 1, 68 120);
 -> Lineare Algebra, Numerisches Rechnen;
 => Numerisches Rechnen;
 
@@ -8,7 +8,7 @@
 -> Lineare Algebra, Datenstrukturen Und Algorithmen, Berechenbarkeit Und Komplexität, Numerisches Rechnen;
 => Berechenbarkeit Und Komplexität;
 
-#Programmierung(1, 0, 1, 6, 120);
+#Programmierung(1, 0, 1, 8, 120);
 -> Softwaretechnik, Betriebssysteme Und Systemsoftware, Datenstrukturen Und Algorithmen, Praktikum Systemprogrammierung;
 => Praktikum Systemprogrammierung;
 
@@ -32,7 +32,7 @@
 
 #Einführung In Die Angewandte Stochastik(2, 1, 0, 6, 120);
 
-#Lineare Algebra(2, 1, 0, 6, 120);
+#Lineare Algebra(2, 1, 0, 8, 120);
 -> Numerisches Rechnen, Matemathische Logik;
 => Numerisches Rechnen;
 %3. Semester:
@@ -48,7 +48,7 @@
 #Praktikum Systemprogrammierung(3, 1, 1, 6, 120);
 -> Softwarepraktikum;
 
-#Proseminar(3, 1, 1, 4, 100);
+#Proseminar(3, 1, 1, 3, 100);
 -> Seminar;
 ~> Seminar;
 
@@ -68,7 +68,7 @@
 
 #Wahlpflicht Theorie(5, 1, 1, 6, 120);
 
-#Seminar(5, 1, 1, 3, 120);
+#Seminar(5, 1, 1, 4, 120);
 ~> Bachelorarbeit;
 
 #NTW(5, 1, 1, 4, 80);
