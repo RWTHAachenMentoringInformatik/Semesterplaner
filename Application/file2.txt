@@ -1,0 +1,86 @@
+##InformatikSommersemester;
+
+%1. Semester
+
+#Formale Systeme Automaten Und Prozesse(1, 1, 0, 6, 120);
+-> Berechenbarkeit Und Komplexität;
+=> Berechenbarkeit Und Komplexität;
+
+#Datenstrukturen Und Algorithmen(1, 1, 0, 6, 120);
+-> Datenbanken Und Informationssysteme, Softwarepraktikum;
+=> Softwarepraktikum;
+
+#Einführung In Die Angewandte Stochastik(1, 1, 0, 6, 120);
+
+#Lineare Algebra(1, 1, 0, 6, 120);
+-> Numerisches Rechnen, Matemathische Logik;
+=> Numerisches Rechnen;
+
+#NTW(1, 1, 1, 4, 80);
+
+%2. Semester
+
+#Afi(2, 0, 1, 6, 120);
+-> Lineare Algebra, Numerisches Rechnen;
+=> Numerisches Rechnen;
+
+#Diskrete Strukturen(2, 0, 1, 6, 120);
+-> Lineare Algebra, Datenstrukturen Und Algorithmen, Berechenbarkeit Und Komplexität, Numerisches Rechnen;
+=> Berechenbarkeit Und Komplexität;
+
+#Programmierung(2, 0, 1, 6, 120);
+-> Softwaretechnik, Betriebssysteme Und Systemsoftware, Datenstrukturen Und Algorithmen, Praktikum Systemprogrammierung;
+=> Praktikum Systemprogrammierung;
+
+#Einführung In Die Technische Informatik(2, 0, 1, 6, 120);
+-> Softwaretechnik, Betriebssysteme Und Systemsoftware, Datenstrukturen Und Algorithmen, Praktikum Systemprogrammierung;
+=> Praktikum Systemprogrammierung;
+~> Praktikum Systemprogrammierung;
+
+%3. Semester
+
+#Betriebssysteme Und Systemsoftware(3, 1, 0, 6, 120);
+-> Datenkommunikation Und Sicherheit;
+=> Datenkommunikation Und Sicherheit;
+
+#Datenbanken Und Informationssysteme(3, 1, 0, 6, 120);
+
+#Mathematische Logik(3, 1, 0, 6, 120);
+
+#Proseminar(3, 1, 1, 4, 100);
+-> Seminar;
+~> Seminar;
+
+%4. Semester
+
+#Numerisches Rechnen(4, 0, 1, 6, 120);
+
+#Berechenbarkeit Und Komplexität(4, 0, 1, 6, 120);
+-> Mathematische Logik;
+=> Mathematische Logik;
+
+#Softwaretechnik(4, 0, 1, 6, 120);
+
+#Wahlpflicht 1(4, 1, 1, 6, 120);
+
+%5. Semester
+
+#Praktikum Systemprogrammierung(5, 1, 1, 6, 120);
+-> Softwarepraktikum;
+
+#Datenkommunikation Und Sicherheit(5, 1, 0, 6, 120);
+
+#Softwarepraktikum(5, 1, 0, 6, 120);
+
+#Seminar(5, 1, 1, 3, 120);
+~> Bachelorarbeit;
+
+%6. Semester
+
+#Bachelorarbeit(6, 1, 1, 16, 350);
+
+#Wahlpflicht 2(6, 1, 1, 6, 120);
+
+#Wahlpflicht 3(6, 1, 1, 6, 120);
+
+#Wahlpflicht Theorie(6, 1, 1, 6, 120);

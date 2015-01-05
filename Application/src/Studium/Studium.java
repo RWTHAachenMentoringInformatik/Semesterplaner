@@ -488,24 +488,24 @@ public class Studium {
 
         Modul mod = findModulbyName(text);
 
-        short oldSemNumber = mod.getSemesterNumber();
+        int oldSemNumber = mod.getSemesterNumber();
 
         Semester oldSemester = this.getSemester().get(oldSemNumber - 1);
 
-        short nextSemesterNumber = (short) (oldSemNumber - 2);
+        int nextSemesterNumber = (oldSemNumber - 2);
+
 
         if (mod.getSommerWinter() == SommerWinterSemester.BEIDE) {
             nextSemesterNumber++;
         }
 
-        if ((currentSemester % 2 == 1 && mod.getSommerWinter().equals(SommerWinterSemester.SOMMER))
-                || (currentSemester % 2 == 0 && mod.getSommerWinter().equals(SommerWinterSemester.WINTER))) {
-            nextSemesterNumber = (short) Math.max(nextSemesterNumber, currentSemester + 1);
-        } else {
-            nextSemesterNumber = (short) Math.max(nextSemesterNumber, currentSemester);
+        nextSemesterNumber = Math.max(1, nextSemesterNumber);
+
+        if(mod.getSommerWinter() == SommerWinterSemester.SOMMER) {
+            nextSemesterNumber = Math.max(2, nextSemesterNumber);
         }
 
-        mod.setSemesterNumber(nextSemesterNumber);
+        mod.setSemesterNumber((short)nextSemesterNumber);
 
         this.deleteByName(mod.getName());
         oldSemester.setCp(oldSemester.getCp() - mod.getCredits());
@@ -536,13 +536,6 @@ public class Studium {
 
         if (mod.getSommerWinter() == SommerWinterSemester.BEIDE) {
             nextSemesterNumber--;
-        }
-
-        if ((currentSemester % 2 == 1 && mod.getSommerWinter().equals(SommerWinterSemester.SOMMER))
-                || (currentSemester % 2 == 0 && mod.getSommerWinter().equals(SommerWinterSemester.WINTER))) {
-            nextSemesterNumber = (short) Math.max(nextSemesterNumber, currentSemester + 1);
-        } else {
-            nextSemesterNumber = (short) Math.max(nextSemesterNumber, currentSemester);
         }
 
         mod.setSemesterNumber(nextSemesterNumber);
