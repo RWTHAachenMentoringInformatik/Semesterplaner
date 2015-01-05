@@ -1,6 +1,6 @@
 ##Informatik;
 
-#Afi(1, 0, 1, 68 120);
+#Afi(1, 0, 1, 8, 120);
 -> Lineare Algebra, Numerisches Rechnen;
 => Numerisches Rechnen;
 
