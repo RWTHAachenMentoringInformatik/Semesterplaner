@@ -25,6 +25,9 @@ public class Planner {
     private static int credits = 1;
     private static int houres = 1;
 
+    static String filepath1 = "";
+    static String filepath2 = "";
+
     private static String read() {
         if (br != null && view == null) {
             String input = "";
@@ -50,14 +53,12 @@ public class Planner {
      * */
     public static void main(String[] args) {
         String datapath = "";
-        if (args.length != 0) {
-            datapath = args[0];
+        if(args.length>=1){
+            filepath1 = args[0];
         }
-        if (args == null) {
-            System.out.print("Switching to default Studium!\n");
-            datapath = "file.txt";
+        if(args.length>=2){
+            filepath2 = args[1];
         }
-        c = StudiumManager.getController(datapath);
         view = new FirstView();
         view.setVisible(true);
     }
@@ -72,12 +73,12 @@ public class Planner {
 
     /**Helper-Function for my version of the view*/
     public static int getCpMax() {
-        return c.getStudium().getcPMax();
+        return 35;
     }
 
     /**Helper-Function for my version of the view*/
     public static int getHMax() {
-        return c.getStudium().gethMax();
+        return 600;
     }
 
     /**
@@ -134,7 +135,22 @@ public class Planner {
     /**
      * Your View can (and should) deliver the initial Data with this Method!
      * */
-    public static void addInitialData(int currSem, int maxCp, int maxH) {
+    public static void addInitialData(int currSem, int maxCp, int maxH, boolean startInSummer) {
+        if(startInSummer){
+            if(!filepath2.equals("")){
+                c = StudiumManager.getController(filepath2);
+            }else if(!filepath1.equals("")){
+                c = StudiumManager.getController(filepath1);
+            }else{
+                c = StudiumManager.getController("file2.txt");
+            }
+        }else{
+            if(!filepath1.equals("")){
+                c = StudiumManager.getController(filepath1);
+            }else {
+                c = StudiumManager.getController("file.txt");
+            }
+        }
         c.getStudium().setCurrentSemester(currSem);
         credits = maxCp;
         houres = maxH;

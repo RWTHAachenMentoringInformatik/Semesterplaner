@@ -1,7 +1,6 @@
 ##InformatikSommersemester;
 
 %1. Semester
-
 #Formale Systeme Automaten Und Prozesse(1, 1, 0, 6, 120);
 -> Berechenbarkeit Und Komplexität;
 => Berechenbarkeit Und Komplexität;
@@ -19,7 +18,6 @@
 #NTW(1, 1, 1, 4, 80);
 
 %2. Semester
-
 #Afi(2, 0, 1, 6, 120);
 -> Lineare Algebra, Numerisches Rechnen;
 => Numerisches Rechnen;
@@ -38,7 +36,6 @@
 ~> Praktikum Systemprogrammierung;
 
 %3. Semester
-
 #Betriebssysteme Und Systemsoftware(3, 1, 0, 6, 120);
 -> Datenkommunikation Und Sicherheit;
 => Datenkommunikation Und Sicherheit;
@@ -52,7 +49,6 @@
 ~> Seminar;
 
 %4. Semester
-
 #Numerisches Rechnen(4, 0, 1, 6, 120);
 
 #Berechenbarkeit Und Komplexität(4, 0, 1, 6, 120);
@@ -64,7 +60,6 @@
 #Wahlpflicht 1(4, 1, 1, 6, 120);
 
 %5. Semester
-
 #Praktikum Systemprogrammierung(5, 1, 1, 6, 120);
 -> Softwarepraktikum;
 
@@ -76,7 +71,6 @@
 ~> Bachelorarbeit;
 
 %6. Semester
-
 #Bachelorarbeit(6, 1, 1, 16, 350);
 
 #Wahlpflicht 2(6, 1, 1, 6, 120);

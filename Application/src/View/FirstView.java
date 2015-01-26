@@ -19,7 +19,7 @@ public class FirstView extends View {
     private static String TYPE_TEXT_CP = "<<Type here>>";
     private static String TYPE_TEXT_H = "<<Type here>>";
 
-    int SIZE_X = 4;
+    int SIZE_X = 5;
     int SIZE_Y = 2;
 
 
@@ -32,6 +32,7 @@ public class FirstView extends View {
             int currSem = 1;
             int maxCp = Planner.getCpMax();
             int maxH = Planner.getHMax();
+            boolean startInSummer = false;
             if (!((JTextField) bgroup.get(1).get(0)).getText().equals(TYPE_TEXT_SEM)
                     && !((JTextField) bgroup.get(1).get(0)).getText().contains(" ")
                     && !((JTextField) bgroup.get(1).get(0)).getText().equals("")) {
@@ -48,7 +49,15 @@ public class FirstView extends View {
 
                 maxH = Integer.parseInt(((JTextField) bgroup.get(1).get(2)).getText());
             }
-            updatePlanner(currSem, maxCp, maxH);
+            if (!((JTextField) bgroup.get(1).get(3)).getText().equals(TYPE_TEXT_H)
+                    && !((JTextField) bgroup.get(1).get(3)).getText().contains(" ")
+                    && (((JTextField) bgroup.get(1).get(3)).getText().equals("yes"))
+                     ||((JTextField) bgroup.get(1).get(3)).getText().equals("Yes")
+                    ||((JTextField) bgroup.get(1).get(3)).getText().equals("Y")
+                    ||((JTextField) bgroup.get(1).get(3)).getText().equals("y")) {
+                startInSummer=true;
+            }
+            updatePlanner(currSem, maxCp, maxH, startInSummer);
         }
     };
 
@@ -124,6 +133,21 @@ public class FirstView extends View {
                     tmp.setBackground(Color.WHITE);
                     tmp.setVisible(true);
                 } else if (i == 0 && j == 3) {
+                    bgroup.get(i).add(new JTextField());
+                    JComponent tmp = bgroup.get(i).get(j);
+                    ((JTextField) tmp).setText("Start in Summer-Term? ['yes'/'No']: ");
+                    ((JTextField) tmp).setEditable(false);
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.BOLD, 9));
+                    tmp.setBackground(Color.WHITE);
+                    tmp.setVisible(true);
+                } else if(i == 1 && j == 3) {
+                    bgroup.get(i).add(new JTextField());
+                    JComponent tmp = bgroup.get(i).get(j);
+                    ((JTextField) tmp).setText(TYPE_TEXT_H);
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.BOLD, 10));
+                    tmp.setBackground(Color.WHITE);
+                    tmp.setVisible(true);
+                } else if (i == 0 && j == 4) {
                     bgroup.get(i).add(new JButton());
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText("Ok!");
@@ -150,8 +174,8 @@ public class FirstView extends View {
         }
     }
 
-    public void updatePlanner(int currSem, int maxCp, int maxH) {
-        Planner.addInitialData(currSem, maxCp, maxH);
+    public void updatePlanner(int currSem, int maxCp, int maxH, boolean startInSummer) {
+        Planner.addInitialData(currSem, maxCp, maxH, startInSummer);
         this.dispose();
     }
 

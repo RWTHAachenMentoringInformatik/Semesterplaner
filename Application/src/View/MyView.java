@@ -54,15 +54,20 @@ public class MyView extends View {
     Color notEditable = new Color(187, 237, 225);
     Color chosen = new Color(187, 237, 123);
 
-
     JFrame popup = null;
 
     JButton currPressedButton = null;
+
     boolean dragging = false;
+
     String sourceModuleForDragging = Planner.getModulToShift();
+
     boolean exchanging = false;
+
     ArrayList<ArrayList<JComponent>> bgroup = null;
+
     GridLayout experimentLayout;
+
     MouseAdapter infoadapter = new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -84,6 +89,7 @@ public class MyView extends View {
             closePopup();
         }
     };
+
     MouseAdapter mainadapter = new MouseAdapter() {
 
         @Override
@@ -152,6 +158,7 @@ public class MyView extends View {
         }
 
     };
+
     private ActionListener controlListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
