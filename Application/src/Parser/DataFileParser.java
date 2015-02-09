@@ -113,7 +113,7 @@ public class DataFileParser implements DataParser {
         houres = Integer.parseInt(tmps);
         tmps = "";
 
-        SommerWinterSemester sw = SommerWinterSemester.WINTER;
+        SommerWinterSemester sw;
         if (sose && wintersem) sw = SommerWinterSemester.BEIDE;
         else if (wintersem) sw = SommerWinterSemester.SOMMER;
         else sw = SommerWinterSemester.WINTER;

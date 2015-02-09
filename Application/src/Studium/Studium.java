@@ -53,6 +53,7 @@ public class Studium {
             semester.get(i).setCp(credits);
             semester.get(i).setHoures(houres);
             credits = 0;
+            houres = 0;
         }
         if (semester != null) {
             Collections.sort(semester);

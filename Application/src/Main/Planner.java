@@ -3,13 +3,14 @@ package Main; /**
  */
 
 import Manager.StudiumManager;
+import Studium.Studium;
 import View.FirstView;
+import View.SaveView;
 import View.MyView;
 import View.View;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 
 
 /**
@@ -22,8 +23,8 @@ public class Planner {
     private static View view = null;
     private static StudiumManager c = null;
     private static int semester = 1;
-    private static int credits = 1;
-    private static int houres = 1;
+    private static int credits = 30;
+    private static int houres = 600;
 
     static String filepath1 = "";
     static String filepath2 = "";
@@ -73,12 +74,12 @@ public class Planner {
 
     /**Helper-Function for my version of the view*/
     public static int getCpMax() {
-        return 35;
+        return credits;
     }
 
     /**Helper-Function for my version of the view*/
     public static int getHMax() {
-        return 600;
+        return houres;
     }
 
     /**
@@ -189,8 +190,48 @@ public class Planner {
      * Kills the current view and Exchanges it with the initial View!
      * */
     public static void exchangeViews() {
+        semester = 1;
+        credits = 30;
+        houres = 600;
         view.dispose();
         view = new FirstView();
+        view.setVisible(true);
+    }
+
+    public static void saveStudiumAsFile() {
+        View v = new SaveView();
+        v.setVisible(true);
+    }
+
+    public static void saveStudiumAsFile(String s) {
+        System.out.print(s);
+        File file = new File(s);
+        String toFile = c.getStudium().toDataString();
+        if(file.exists()){
+            file.delete();
+        }else{
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(toFile);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setNewStudium(String text) {
+        c = StudiumManager.getController(text);
+        c.getStudium().setCurrentSemester(semester);
+        c.getStudium().setcPMax(credits);
+        c.getStudium().sethMax(houres);
+        view.dispose();
+        view = new MyView(c.getStudium());
         view.setVisible(true);
     }
 }

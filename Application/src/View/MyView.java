@@ -104,7 +104,7 @@ public class MyView extends View {
                 if (((Component) e.getSource()).getBackground().equals(warning)) {
                     jta.setText(requestPopupText(((JButton) e.getSource()).getText()));
                 } else if (((Component) e.getSource()).getBackground().equals(tooMuchCredits)) {
-                    jta.setText("Too much credits in that Semester!!");
+                    jta.setText("Too much credits or houres in that Semester!!");
                 }
                 jta.setFont(new Font("Serif", Font.CENTER_BASELINE, 13));
                 jta.setEditable(false);
@@ -221,7 +221,9 @@ public class MyView extends View {
     private void decideColor(Semester s) {
         if (s.getCp() > Planner.getCpMax()) {
             semesterColor = tooMuchCredits;
-        } else {
+        } else if(s.getHoures() > Planner.getHMax()){
+            semesterColor = tooMuchCredits;
+        }else{
             semesterColor = Color.LIGHT_GRAY;
         }
     }
@@ -332,12 +334,19 @@ public class MyView extends View {
                     tmp.setBackground(semesterColor);
                     tmp.setVisible(true);
                 } else if (j == 0 && i == 0) {
-                    bgroup.get(i).add(new JTextArea());
+                    bgroup.get(i).add(new JButton());
                     JComponent tmp = bgroup.get(i).get(j);
-                    ((JTextArea) tmp).setText("Your Plan: ");
-                    ((JTextArea) tmp).setEditable(false);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.BOLD, 15));
-                    tmp.setBackground(Color.LIGHT_GRAY);
+                    ((JButton) tmp).setText("SAVE and LOAD");
+                    ActionListener saveListener = new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            Planner.saveStudiumAsFile();
+                        }
+                    };
+                    ((JButton) tmp).addActionListener(saveListener);
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.ITALIC | Font.BOLD, 12));
+                    tmp.setBackground(chosen);
                     tmp.setVisible(true);
                 } else if (i == 5 && j == SIZE_X - 1) {
                     bgroup.get(i).add(new JButton());
@@ -400,7 +409,7 @@ public class MyView extends View {
                 } else if (j == SIZE_X - 1) {
                     bgroup.get(i).add(new JTextArea());
                     JComponent tmp = bgroup.get(i).get(j);
-                    tmp.setBackground(Color.LIGHT_GRAY);
+                    tmp.setBackground(Color.BLACK);
                     ((JTextArea) tmp).setEditable(false);
                     tmp.setVisible(true);
                 } else if (i > SEMESTER) {

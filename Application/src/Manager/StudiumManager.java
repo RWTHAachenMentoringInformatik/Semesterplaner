@@ -30,10 +30,7 @@ public class StudiumManager {
     }
 
     public static StudiumManager getController(String datapath) {
-        if (instance == null) {
-            instance = new StudiumManager(datapath);
-        }
-        return instance;
+        return new StudiumManager(datapath);
     }
 
     public static StudiumManager getController() {
