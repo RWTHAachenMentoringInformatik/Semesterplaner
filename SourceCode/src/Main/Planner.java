@@ -4,10 +4,15 @@ package Main; /**
 
 import Manager.StudiumManager;
 import Studium.Studium;
-import View.FirstView;
+import View.FirstView_2;
 import View.SaveView;
 import View.MyView;
 import View.View;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.windows.WindowsLookAndFeel;
+import com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel;
+
 
 import javax.swing.*;
 import java.io.*;
@@ -21,6 +26,7 @@ public class Planner {
 
     final private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static View view = null;
+    private static JFrame frame = null;
     private static StudiumManager c = null;
     private static int semester = 1;
     private static int credits = 30;
@@ -53,6 +59,13 @@ public class Planner {
      * Call this method to start the program.
      * */
     public static void main(String[] args) {
+        try {
+            //UIManager.setLookAndFeel(new PlasticLookAndFeel());
+            UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+            //UIManager.setLookAndFeel(new WindowsLookAndFeel());
+            //UIManager.setLookAndFeel(new WindowsClassicLookAndFeel());
+        } catch (Exception e) {}
+
         String datapath = "";
         if(args.length>=1){
             filepath1 = args[0];
@@ -60,8 +73,10 @@ public class Planner {
         if(args.length>=2){
             filepath2 = args[1];
         }
-        view = new FirstView();
+        view = new FirstView_2();
         view.setVisible(true);
+
+
     }
 
     /**
@@ -87,7 +102,7 @@ public class Planner {
      * (or to the last free Semester "Left")
      * */
     public static void shiftModule(String dir) {
-        if (dir.equals(((MyView) view).RIGHT)) {
+        if (dir.equals(MyView.RIGHT)) {
             c.shiftRight();
         } else {
             c.shiftLeft();
@@ -194,7 +209,7 @@ public class Planner {
         credits = 30;
         houres = 600;
         view.dispose();
-        view = new FirstView();
+        view = new FirstView_2();
         view.setVisible(true);
     }
 

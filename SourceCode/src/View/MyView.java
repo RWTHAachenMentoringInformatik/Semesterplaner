@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * Created by philippe on 11.11.14.
+ * Modified by thiemol on 09.06.15 -> Textsize and Color
  */
 public class MyView extends View {
 
@@ -42,6 +43,9 @@ public class MyView extends View {
     int SIZE_X = 10;
     int SIZE_Y = 8;
     int SEMESTER = 0;
+
+    int textsize_menu = 18;
+    int textsize_moduls = 14;
 
     Studium studium;
 
@@ -104,7 +108,7 @@ public class MyView extends View {
                 if (((Component) e.getSource()).getBackground().equals(warning)) {
                     jta.setText(requestPopupText(((JButton) e.getSource()).getText()));
                 } else if (((Component) e.getSource()).getBackground().equals(tooMuchCredits)) {
-                    jta.setText("Too much credits or houres in that Semester!!");
+                    jta.setText("Too much credits or hours in that Semester!!");
                 }
                 jta.setFont(new Font("Serif", Font.CENTER_BASELINE, 13));
                 jta.setEditable(false);
@@ -184,12 +188,14 @@ public class MyView extends View {
     public MyView(Studium studium) {
         this.studium = studium;
         SEMESTER = studium.getCurrentSemester() - 1;
-        setTitle("Semester Main.Planner");
+        setTitle("Plane dein Studium");
         initbGroup();
         this.getContentPane().setBackground(Color.BLACK);
         setPassedAndGiveNames();
         placeButtonsAndGiveSizes();
-        setSize(1500, 1500);
+
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -251,6 +257,22 @@ public class MyView extends View {
         }
     }
 
+    //help function for line break
+    //does not work -> separating by names
+    private String linebreak(String s, int c){
+        String color="\"#BDBDBD\"";
+        if(SEMESTER>c) color="\"#000000\"";
+
+        String[] parts = s.split(" ");
+        s = "<html><FONT COLOR=" + color + ">";
+        for(int i=0; i < parts.length; i++){
+           s += parts[i] + "<br>";
+        }
+        s += "</FONT></html>";
+
+        return s;
+    }
+
     private void setPassedAndGiveNames() {
         for (int i = 0; i < studium.getSemester().size(); i++) {
             for (int j = 0; j < studium.getSemester().get(i).getModules().size(); j++) {
@@ -258,11 +280,15 @@ public class MyView extends View {
                 ((JButton) bgroup.get(i + 1).get(j + 1)).setText(studium.getSemester().get(i).getModules().get(j).getName());
                 if (sourceModuleForDragging.equals(studium.getSemester().get(i).getModules().get(j).getName())) {
                     bgroup.get(i + 1).get(j + 1).setBackground(chosen);
-                } else if (!studium.getSemester().get(i).getModules().get(j).isAbsolved()) {
+                } else if (!studium.getSemester().get(i).getModules().get(j).isAbsolved()) { // modul passed is chosen
                     bgroup.get(i + 1).get(j + 1).setBackground(notPassed);
                     bgroup.get(i + 1).get(j + 1).setForeground(Color.WHITE);
                 } else {
-                    bgroup.get(i + 1).get(j + 1).setBackground(buttonColor);
+                    if(SEMESTER > i){
+                        bgroup.get(i + 1).get(j + 1).setBackground(notEditable); // set all inner lower then semester
+                    } else {
+                        bgroup.get(i + 1).get(j + 1).setBackground(buttonColor); // set all inner higher an equal to semester
+                    }
                     if (buttonColor.equals(warning)) {
                         bgroup.get(i + 1).get(j + 1).setForeground(Color.WHITE);
                     }
@@ -314,15 +340,15 @@ public class MyView extends View {
             }
             bgroup.add(new ArrayList<JComponent>());
             for (int j = 0; j < SIZE_X; j++) {
-                if (i == 0 && j < SIZE_X - 1 && j != 0) {
+                if (i == 0 && j < SIZE_X - 1 && j != 0) { // first column
                     bgroup.get(i).add(new JTextArea());
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JTextArea) tmp).setText("Modul #" + (j));
                     ((JTextArea) tmp).setEditable(false);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.BOLD, 13));
+                    tmp.setFont(new Font("Serif",  Font.BOLD, textsize_menu));
                     tmp.setBackground(Color.LIGHT_GRAY);
                     tmp.setVisible(true);
-                } else if (i < SIZE_Y && j == 0 && i != 0) {
+                } else if (i < SIZE_Y && j == 0 && i != 0) { // first row
                     bgroup.get(i).add(new JTextArea());
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JTextArea) tmp).setText("Semester #" + (i) + "\n" +
@@ -330,7 +356,7 @@ public class MyView extends View {
                             studium.getSemester().get(i - 1).getHoures() + " h's");
                     ((JTextArea) tmp).setEditable(false);
                     tmp.addMouseListener(mainadapter);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.BOLD, 13));
+                    tmp.setFont(new Font("Serif", Font.BOLD, textsize_menu));
                     tmp.setBackground(semesterColor);
                     tmp.setVisible(true);
                 } else if (j == 0 && i == 0) {
@@ -345,7 +371,7 @@ public class MyView extends View {
                         }
                     };
                     ((JButton) tmp).addActionListener(saveListener);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.ITALIC | Font.BOLD, 12));
+                    tmp.setFont(new Font("Serif", Font.ITALIC | Font.BOLD, textsize_menu));
                     tmp.setBackground(chosen);
                     tmp.setVisible(true);
                 } else if (i == 5 && j == SIZE_X - 1) {
@@ -353,7 +379,7 @@ public class MyView extends View {
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText(RESET_TEXT);
                     ((JButton) tmp).addActionListener(controlListener);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
                     tmp.setBackground(Color.ORANGE);
                     tmp.setVisible(true);
                 } else if (i == 1 && j == SIZE_X - 1) {
@@ -361,16 +387,16 @@ public class MyView extends View {
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText(SEND_TEXT);
                     ((JButton) tmp).addActionListener(controlListener);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
                     tmp.setBackground(new Color(75, 195, 235));
                     tmp.setVisible(true);
                 } else if (i == 0 && j == SIZE_X - 1) {
                     bgroup.get(i).add(new JButton());
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText("Info?");
-                    ((JButton) tmp).setBorder(null);
+                    tmp.setBorder(null);
                     tmp.addMouseListener(infoadapter);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.ITALIC, 10));
+                    tmp.setFont(new Font("Serif", Font.ITALIC, textsize_moduls));
                     tmp.setBackground(new Color(136, 235, 75));
                     tmp.setVisible(true);
                 } else if (i == 6 && j == SIZE_X - 1) {
@@ -378,7 +404,7 @@ public class MyView extends View {
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText(QUIT_TEXT);
                     ((JButton) tmp).addActionListener(controlListener);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
                     tmp.setBackground(notPassed);
                     tmp.setForeground(Color.WHITE);
                     tmp.setVisible(true);
@@ -387,7 +413,7 @@ public class MyView extends View {
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText(DRAG_TEXT_OFF);
                     ((JButton) tmp).addActionListener(controlListener);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
                     tmp.setBackground(new Color(177, 118, 222));
                     tmp.setVisible(true);
                 } else if (i == 4 && j == SIZE_X - 1) {
@@ -395,7 +421,7 @@ public class MyView extends View {
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText(RIGHT);
                     tmp.addMouseListener(mainadapter);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
                     tmp.setBackground(new Color(177, 118, 222));
                     tmp.setVisible(true);
                 } else if (i == 3 && j == SIZE_X - 1) {
@@ -403,7 +429,7 @@ public class MyView extends View {
                     JComponent tmp = bgroup.get(i).get(j);
                     ((JButton) tmp).setText(LEFT);
                     tmp.addMouseListener(mainadapter);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, 10));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
                     tmp.setBackground(new Color(177, 118, 222));
                     tmp.setVisible(true);
                 } else if (j == SIZE_X - 1) {
@@ -412,14 +438,14 @@ public class MyView extends View {
                     tmp.setBackground(Color.BLACK);
                     ((JTextArea) tmp).setEditable(false);
                     tmp.setVisible(true);
-                } else if (i > SEMESTER) {
+                } else if (i > SEMESTER) { // normal mode
                     bgroup.get(i).add(new JButton());
                     JComponent tmp = bgroup.get(i).get(j);
                     tmp.setBackground(passed);
                     tmp.setVisible(false);
                     ((JButton) tmp).setText("");
                     tmp.addMouseListener(mainadapter);
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.ITALIC, 9));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE , textsize_moduls));
                 } else {
                     bgroup.get(i).add(new JButton());
                     JComponent tmp = bgroup.get(i).get(j);
@@ -428,7 +454,8 @@ public class MyView extends View {
                     tmp.addMouseListener(mainadapter);
                     tmp.setEnabled(false);
                     ((JButton) tmp).setText("");
-                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE | Font.ITALIC, 9));
+                    tmp.setFont(new Font("Serif", Font.CENTER_BASELINE, textsize_moduls));
+
                 }
             }
         }

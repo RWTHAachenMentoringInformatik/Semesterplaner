@@ -6,15 +6,17 @@ import Studium.SommerWinterSemester;
 import Studium.Studium;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
  * Created by philippe on 10.11.14.
+ * Modified by thiemol on 09.06.15 -> UTF8
  */
 public class DataFileParser implements DataParser {
 
-    FileReader fr;
     BufferedReader br;
 
     public DataFileParser() {
@@ -23,8 +25,10 @@ public class DataFileParser implements DataParser {
 
     public DataFileParser(String pathToFile) {
         try {
-            fr = new FileReader(pathToFile);
-            br = new BufferedReader(fr);
+            br = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(pathToFile), "UTF8"));
+
         } catch (Exception e) {
             System.out.print("Failed to open studium-data-file!\n");
             e.printStackTrace();
@@ -153,7 +157,7 @@ public class DataFileParser implements DataParser {
         Studium s = new Studium(parseStudiumName(), parseModules(), pathToFile);
         try {
             br.close();
-            fr.close();
+            //fr.close();
         } catch (Exception e) {
             System.out.print("Failed to close studium-data-file!\n");
 
@@ -230,8 +234,10 @@ public class DataFileParser implements DataParser {
 
     private void reOpen(String s) {
         try {
-            fr = new FileReader(s);
-            br = new BufferedReader(fr);
+            br = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(s), "UTF8"));
+
         } catch (Exception e) {
             System.out.print("Failed to open studium-data-file! [2]\n");
             e.printStackTrace();
@@ -241,7 +247,6 @@ public class DataFileParser implements DataParser {
     private void close() {
         try {
             br.close();
-            fr.close();
         } catch (Exception e) {
             System.out.print("Failed to close studium-data-file!\n");
 

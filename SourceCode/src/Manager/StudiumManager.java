@@ -24,7 +24,7 @@ public class StudiumManager {
     private Studium studium;
 
     private StudiumManager(String datapath) {
-        this.datapath = datapath;
+        StudiumManager.datapath = datapath;
         this.dfp = new DataFileParser(datapath);
         this.studium = dfp.parseStudium(datapath);
     }

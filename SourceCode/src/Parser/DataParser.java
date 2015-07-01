@@ -12,6 +12,6 @@ public interface DataParser {
     * This method gets the path to the File you want to read from
     * It has to deliver a read-in studium with all its dependencies and Modules
     * */
-    public Studium parseStudium(String pathToFile);
+    Studium parseStudium(String pathToFile);
 
 }
